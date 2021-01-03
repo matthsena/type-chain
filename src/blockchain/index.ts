@@ -39,17 +39,23 @@ const blockchain = () => {
   const getBalanceOfAddress = (address: string): number => {
     let balance = 0;
 
-    chain.map((b: IBlock<void | ITransactions>) => b.transactions.map((t: ITransactions) => {
-      if (t?.fromAddress === address) {
-        balance -= t.amount;
-      }
+    chain.map((b: IBlock<void | ITransactions>) => {
+      balance = 0;
 
-      if (t?.toAddress === address) {
-        balance += t.amount;
-      }
+      b.transactions.map((t: ITransactions) => {
+        if (t.fromAddress === address) {
+          balance -= t.amount;
+        }
 
-      return balance;
-    }));
+        if (t.toAddress === address) {
+          balance += t.amount;
+        }
+
+        return null;
+      });
+
+      return null;
+    });
 
     return balance;
   };

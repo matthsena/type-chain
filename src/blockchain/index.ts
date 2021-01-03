@@ -1,3 +1,4 @@
+import transactions, { ITransactions } from '../transactions';
 import block from '../block';
 
 const blockchain = () => {
@@ -16,6 +17,10 @@ const blockchain = () => {
   };
 
   const chain = [createGenesisBlock()];
+
+  const createTransaction = (transaction: ITransactions) => {
+    pendingTransactions.push(transaction);
+  };
 };
 
-export default block;
+export default blockchain;

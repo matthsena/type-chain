@@ -7,14 +7,14 @@ interface IBlockParams<T> {
   previusHash: string
 }
 
-interface IBlock<T> extends IBlockParams<T> {
+export interface IBlock<T> extends IBlockParams<T> {
   nonce: number,
   hash: string
 }
 
 interface IBlockFunction<T> {
   calculateHash: () => string,
-  mineNewBlock: (difficulty: number) => void,
+  mineNewBlock: (difficulty: number) => IBlock<T>,
   block: IBlock<T>
 }
 
@@ -29,13 +29,21 @@ const createBlock = <T>(params: IBlockParams<T>): IBlockFunction<T> => {
 
   let hash = calculateHash();
 
-  const mineNewBlock = (difficulty: number): void => {
+  const mineNewBlock = (difficulty: number): IBlock<T> => {
     while (hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
       nonce += 1;
       hash = calculateHash();
     }
 
     console.log('👷‍♂️ A new block has been mined: ', hash);
+
+    return {
+      timestamp,
+      transactions,
+      previusHash,
+      nonce,
+      hash
+    };
   };
 
   const block = {

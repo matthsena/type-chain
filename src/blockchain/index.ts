@@ -1,12 +1,12 @@
 import transactions, { ITransactions } from '../transactions';
-import block from '../block';
+import block, { IBlock } from '../block';
 
 const blockchain = () => {
   const difficulty = 4;
-  const pendingTransactions = [];
+  let pendingTransactions = [];
   const miningReward = 10;
 
-  const createGenesisBlock = () => {
+  const createGenesisBlock = (): IBlock<void> => {
     const genesisBlock = block({
       timestamp: Date.now(),
       transactions: pendingTransactions,
@@ -16,9 +16,23 @@ const blockchain = () => {
     return genesisBlock.block;
   };
 
-  const chain = [createGenesisBlock()];
+  const chain: Array<IBlock<void | ITransactions>> = [createGenesisBlock()];
 
-  const createTransaction = (transaction: ITransactions) => {
+  const minePendingTransactions = (miningRewardAdress: string): void => {
+    const lastBlock = chain[chain.length - 1];
+
+    const newBlock = block({
+      timestamp: Date.now(),
+      previusHash: lastBlock.hash,
+      transactions: pendingTransactions
+    });
+
+    chain.push(newBlock.mineNewBlock(difficulty));
+
+    pendingTransactions = [transactions(null, miningRewardAdress, miningReward)];
+  };
+
+  const createTransaction = (transaction: ITransactions): void => {
     pendingTransactions.push(transaction);
   };
 };

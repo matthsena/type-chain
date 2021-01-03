@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import SHA256 from 'crypto-js/sha256';
 
 interface IBlockParams<T> {
@@ -6,7 +7,18 @@ interface IBlockParams<T> {
   previusHash: string
 }
 
-const createBlock = <T>(params: IBlockParams<T>) => {
+interface IBlock<T> extends IBlockParams<T> {
+  nonce: number,
+  hash: string
+}
+
+interface IBlockFunction<T> {
+  calculateHash: () => string,
+  mineNewBlock: (difficulty: number) => void,
+  block: IBlock<T>
+}
+
+const createBlock = <T>(params: IBlockParams<T>): IBlockFunction<T> => {
   const { timestamp, transactions, previusHash } = params;
 
   let nonce = 0;
@@ -26,7 +38,15 @@ const createBlock = <T>(params: IBlockParams<T>) => {
     console.log('👷‍♂️ A new block has been mined: ', hash);
   };
 
-  return { calculateHash, mineNewBlock };
+  const block = {
+    timestamp,
+    transactions,
+    previusHash,
+    nonce,
+    hash
+  };
+
+  return { calculateHash, mineNewBlock, block };
 };
 
 export default createBlock;

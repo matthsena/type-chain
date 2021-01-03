@@ -35,6 +35,26 @@ const blockchain = () => {
   const createTransaction = (transaction: ITransactions): void => {
     pendingTransactions.push(transaction);
   };
+
+  const getBalanceOfAddress = (address: string): number => {
+    let balance = 0;
+
+    chain.map((b: IBlock<void | ITransactions>) => b.transactions.map((t: ITransactions) => {
+      if (t?.fromAddress === address) {
+        balance -= t.amount;
+      }
+
+      if (t?.toAddress === address) {
+        balance += t.amount;
+      }
+
+      return balance;
+    }));
+
+    return balance;
+  };
+
+  return { minePendingTransactions, createTransaction, getBalanceOfAddress };
 };
 
 export default blockchain;

@@ -18,6 +18,7 @@ module.exports = {
     'comma-dangle': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
-    'array-callback-return': 'off'
+    'array-callback-return': 'off',
+    'no-unused-vars': 'off'
   },
 };

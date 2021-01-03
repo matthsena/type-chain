@@ -1,7 +1,13 @@
 import transactions, { ITransactions } from '../transactions';
 import block, { IBlock } from '../block';
 
-const blockchain = () => {
+interface IBlockchainFunction {
+  minePendingTransactions: (miningRewardAdress: string) => void,
+  createTransaction: (transaction: ITransactions) => void,
+  getBalanceOfAddress: (address: string) => number
+}
+
+const blockchain = (): IBlockchainFunction => {
   const difficulty = 4;
   let pendingTransactions = [];
   const miningReward = 10;

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import SHA256 from 'crypto-js/sha256';
 
 interface IBlockParams<T> {

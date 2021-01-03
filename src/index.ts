@@ -15,3 +15,9 @@ typeCoin.minePendingTransactions('address3');
 console.log('address1: ', typeCoin.getBalanceOfAddress('address1'));
 console.log('address2: ', typeCoin.getBalanceOfAddress('address2'));
 console.log('address3: ', typeCoin.getBalanceOfAddress('address3'));
+
+typeCoin.minePendingTransactions('address3');
+
+console.log('address1: ', typeCoin.getBalanceOfAddress('address1'));
+console.log('address2: ', typeCoin.getBalanceOfAddress('address2'));
+console.log('address3: ', typeCoin.getBalanceOfAddress('address3'));

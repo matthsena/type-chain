@@ -1,7 +1,7 @@
 export interface ITransactions {
   fromAddress: string | null,
-  toAddress: string,
-  amount: number
+  toAddress: string | null,
+  amount: number | null
 }
 
 const transactions = (

@@ -17,6 +17,7 @@ module.exports = {
   rules: {
     'comma-dangle': 'off',
     'import/extensions': 'off',
-    'import/no-unresolved': 'off'
+    'import/no-unresolved': 'off',
+    'array-callback-return': 'off'
   },
 };

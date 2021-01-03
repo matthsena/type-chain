@@ -6,17 +6,17 @@ const blockchain = () => {
   let pendingTransactions = [];
   const miningReward = 10;
 
-  const createGenesisBlock = (): IBlock<void> => {
+  const createGenesisBlock = (): IBlock<ITransactions> => {
     const genesisBlock = block({
       timestamp: Date.now(),
-      transactions: pendingTransactions,
+      transactions: [transactions(null, null, null)],
       previusHash: '0'
     });
 
     return genesisBlock.block;
   };
 
-  const chain: Array<IBlock<void | ITransactions>> = [createGenesisBlock()];
+  const chain: Array<IBlock<ITransactions>> = [createGenesisBlock()];
 
   const minePendingTransactions = (miningRewardAdress: string): void => {
     const lastBlock = chain[chain.length - 1];
@@ -39,28 +39,24 @@ const blockchain = () => {
   const getBalanceOfAddress = (address: string): number => {
     let balance = 0;
 
-    chain.map((b: IBlock<void | ITransactions>) => {
-      balance = 0;
-
-      b.transactions.map((t: ITransactions) => {
-        if (t.fromAddress === address) {
-          balance -= t.amount;
+    chain.map((bl: IBlock<ITransactions>): void => {
+      bl.transactions.map((transaction: ITransactions): void => {
+        if (transaction.fromAddress === address) {
+          balance -= transaction.amount;
         }
 
-        if (t.toAddress === address) {
-          balance += t.amount;
+        if (transaction.toAddress === address) {
+          balance += transaction.amount;
         }
-
-        return null;
       });
-
-      return null;
     });
 
     return balance;
   };
 
-  return { minePendingTransactions, createTransaction, getBalanceOfAddress };
+  return {
+    minePendingTransactions, createTransaction, getBalanceOfAddress
+  };
 };
 
 export default blockchain;

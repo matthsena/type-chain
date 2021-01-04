@@ -9,7 +9,7 @@ interface IBlockchainFunction {
 }
 
 const blockchain = (): IBlockchainFunction => {
-  const difficulty = 6;
+  const difficulty = 5;
   let pendingTransactions = [];
   const miningReward = 10;
 

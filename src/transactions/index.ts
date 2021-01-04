@@ -1,3 +1,5 @@
+import { debugTransactions } from '../debug';
+
 export interface ITransactions {
   fromAddress: string | null,
   toAddress: string | null,
@@ -6,10 +8,16 @@ export interface ITransactions {
 
 const transactions = (
   fromAddress: string | null, toAddress: string, amount: number
-):ITransactions => ({
-  fromAddress,
-  toAddress,
-  amount
-});
+):ITransactions => {
+  if (!fromAddress && toAddress && amount) {
+    debugTransactions(`💰 The network will send  ${amount} coins as a mining reward in the next mining to:`, toAddress);
+  }
+
+  return {
+    fromAddress,
+    toAddress,
+    amount
+  };
+};
 
 export default transactions;

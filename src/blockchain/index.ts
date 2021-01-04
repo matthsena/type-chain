@@ -1,5 +1,6 @@
 import transactions, { ITransactions } from '../transactions';
 import block, { IBlock } from '../block';
+import { debugBlockchain } from '../debug';
 
 interface IBlockchainFunction {
   minePendingTransactions: (miningRewardAdress: string) => void,
@@ -8,7 +9,7 @@ interface IBlockchainFunction {
 }
 
 const blockchain = (): IBlockchainFunction => {
-  const difficulty = 4;
+  const difficulty = 6;
   let pendingTransactions = [];
   const miningReward = 10;
 
@@ -19,12 +20,16 @@ const blockchain = (): IBlockchainFunction => {
       previusHash: '0'
     });
 
+    debugBlockchain('🚀 Created Genesis Block: ', genesisBlock.block.hash);
+
     return genesisBlock.block;
   };
 
   const chain: Array<IBlock<ITransactions>> = [createGenesisBlock()];
 
   const minePendingTransactions = (miningRewardAdress: string): void => {
+    debugBlockchain('⛏️  Mining pending transactions!');
+
     const lastBlock = chain[chain.length - 1];
 
     const newBlock = block({
@@ -40,6 +45,7 @@ const blockchain = (): IBlockchainFunction => {
 
   const createTransaction = (transaction: ITransactions): void => {
     pendingTransactions.push(transaction);
+    debugBlockchain(`🔔 New transaction added to queue. From: ${transaction.fromAddress}; To: ${transaction.toAddress}.`);
   };
 
   const getBalanceOfAddress = (address: string): number => {

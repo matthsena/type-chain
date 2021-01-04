@@ -1,4 +1,5 @@
 import SHA256 from 'crypto-js/sha256';
+import { debugBlock } from '../debug';
 
 interface IBlockParams<T> {
   timestamp: number,
@@ -34,7 +35,7 @@ const createBlock = <T>(params: IBlockParams<T>): IBlockFunction<T> => {
       hash = calculateHash();
     }
 
-    console.log('👷‍♂️ A new block has been mined: ', hash);
+    debugBlock('👷 🚧 A new block has been mined: ', hash);
 
     return {
       timestamp,

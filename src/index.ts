@@ -1,23 +1,23 @@
 import blockchain from './blockchain';
 import transactions from './transactions';
+import { debugMain } from './debug';
 
 const typeCoin = blockchain();
 
-const transaction1 = transactions('address1', 'address2', 100);
+const transaction1 = transactions('USER_1', 'USER_2', 100);
 typeCoin.createTransaction(transaction1);
 
-const transaction2 = transactions('address2', 'address1', 30);
+const transaction2 = transactions('USER_2', 'USER_1', 30);
 typeCoin.createTransaction(transaction2);
 
-console.log('Start mining');
-typeCoin.minePendingTransactions('address3');
+typeCoin.minePendingTransactions('USER_3');
 
-console.log('address1: ', typeCoin.getBalanceOfAddress('address1'));
-console.log('address2: ', typeCoin.getBalanceOfAddress('address2'));
-console.log('address3: ', typeCoin.getBalanceOfAddress('address3'));
+debugMain('🏦 USER_1 balance $', typeCoin.getBalanceOfAddress('USER_1'));
+debugMain('🏦 USER_2 balance $', typeCoin.getBalanceOfAddress('USER_2'));
+debugMain('🏦 USER_3 balance $', typeCoin.getBalanceOfAddress('USER_3'));
 
-typeCoin.minePendingTransactions('address3');
+typeCoin.minePendingTransactions('USER_3');
 
-console.log('address1: ', typeCoin.getBalanceOfAddress('address1'));
-console.log('address2: ', typeCoin.getBalanceOfAddress('address2'));
-console.log('address3: ', typeCoin.getBalanceOfAddress('address3'));
+debugMain('🏦 USER_1 balance $', typeCoin.getBalanceOfAddress('USER_1'));
+debugMain('🏦 USER_2 balance $', typeCoin.getBalanceOfAddress('USER_2'));
+debugMain('🏦 USER_3 balance $', typeCoin.getBalanceOfAddress('USER_3'));
